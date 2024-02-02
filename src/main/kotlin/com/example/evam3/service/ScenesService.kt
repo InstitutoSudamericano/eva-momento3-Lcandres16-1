@@ -1,71 +1,71 @@
 package com.example.evam3.service
 
-
-import com.Factura_peticiones.model.film.Film
+import com.Factura_peticiones.model.Scenes
 import com.example.evam3.repository.FilmRepository
+import com.example.evam3.repository.ScenesRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class FilmService {
+class ScenesService {
     @Autowired
-    lateinit var filmRepository: FilmRepository
+    lateinit var scenesRepository: ScenesRepository
 
-    fun list (): List<Film> {
-        return filmRepository.findAll()
+    fun list(): List<Scenes> {
+        return scenesRepository.findAll()
     }
 
-    fun save (film: Film): Film {
+    fun save(scenes: Scenes): Scenes {
         try {
-            film.title?.takeIf { it.trim().isNotEmpty() }
-                    ?: throw Exception("Film title must not be empty")
-            return filmRepository.save(film)
+            scenes.location?.takeIf { it.trim().isNotEmpty() }
+                    ?: throw Exception("Location must not be empty")
+            return scenesRepository.save(scenes)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
     }
 
-    fun update(film: Film): Film {
+    fun update(scenes: Scenes): Scenes {
         try {
-            filmRepository.findById(film.id)
+            scenesRepository.findById(scenes.id)
                     ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "ID does not exist")
 
-            return filmRepository.save(film)
+            return scenesRepository.save(scenes)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
 
-    fun updateTitle(film: Film): Film {
+    fun updateLocation(scenes: Scenes): Scenes {
         try {
-            val response = filmRepository.findById(film.id)
+            val response = scenesRepository.findById(scenes.id)
                     ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "ID does not exist")
 
             response.apply {
-                title = film.title
+                location = scenes.location
             }
 
-            return filmRepository.save(response)
+            return scenesRepository.save(response)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
 
-    fun delete(id: Long?): Boolean {
+    fun delete(id: Long?): Boolean? {
         try {
-            filmRepository.findById(id)
+            scenesRepository.findById(id)
                     ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "ID does not exist")
 
-            filmRepository.deleteById(id!!)
+            scenesRepository.deleteById(id!!)
             return true
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
 
-    fun listById(id: Long?): Film? {
-        return filmRepository.findById(id)
+    fun listById(id: Long?): Scenes? {
+        return scenesRepository.findById(id)
     }
 }
