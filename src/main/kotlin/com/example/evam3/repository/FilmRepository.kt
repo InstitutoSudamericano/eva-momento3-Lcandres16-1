@@ -1,9 +1,9 @@
 package com.example.evam3.repository
 
-
-import com.Factura_peticiones.model.film.Film
+import com.example.evam3.model.Film
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+
 
 @Repository
 interface FilmRepository:JpaRepository<Film, Long> {

@@ -1,22 +1,30 @@
-package com.Factura_peticiones.model.film
+package com.example.evam3.model
 
-
-import jakarta.persistence.Column
+import com.fasterxml.jackson.annotation.JsonIgnore
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
 @Table(name = "film")
-public class Film {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+class Film {
+
     @Id
-    @Column(updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var title: String? = null
     var director: String? = null
-    var duration: String? = null
+    var duration: Float? = null
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "film", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var scenes: List<Scenes>? = null
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "film", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var characters: List<Character>? = null
 }

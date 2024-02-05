@@ -10,15 +10,16 @@ import jakarta.persistence.Table
 
 
 @Entity
-@Table(name = "scene")
-class Scenes {
-
+@Table(name = "character")
+class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
-    var description: String? = null
-    var duration: Float? = null
-    var location: String? = null
+
+    var name: String? = null
+    var role: String? = null
+    var cost: Float? = null
+
     @ManyToOne
     @JoinColumn(name = "film_id")
     var film: Film? = null
