@@ -39,7 +39,7 @@ class ScenesController {
 
     @PatchMapping
     fun updateTitle(@RequestBody scenes: Scenes): ResponseEntity<Scenes> {
-        return ResponseEntity(scenesService.updateLocation(scenes), HttpStatus.OK)
+        return ResponseEntity(scenesService.patch(scenes), HttpStatus.OK)
     }
 
     @DeleteMapping("/delete/{id}")
@@ -51,4 +51,5 @@ class ScenesController {
     fun listById(@PathVariable("id") id: Long): ResponseEntity<Scenes> {
         return ResponseEntity(scenesService.listById(id), HttpStatus.OK)
     }
+
 }

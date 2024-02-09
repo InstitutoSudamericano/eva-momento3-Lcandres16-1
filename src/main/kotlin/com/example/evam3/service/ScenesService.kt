@@ -24,17 +24,14 @@ class ScenesService {
         try {
             scenes.location?.takeIf { it.trim().isNotEmpty() }
                     ?: throw Exception("Location must not be empty")
-
-            val film = filmRepository.findById(scenes.film?.id)?:
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "film not found")
-            val remainingTime = film.duration!! - scenes.duration!!
-            if(remainingTime < 0){
-                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "there is no enough time to create a new scene")
+            val film = filmRepository.findById(scenes.film?.id)
+            val allScenes = scenesRepository.findAllByFilmId(scenes.film?.id)
+            var totalDuration = scenes.minutes!!
+            allScenes.forEach { totalDuration += it.minutes!! }
+            if(totalDuration > film?.minutes!!){
+                throw  Exception("duration exceeded")
             }
-            val createdScene = scenesRepository.save(scenes)
-            filmRepository.save(film)
-
-            return createdScene
+            return scenesRepository.save(scenes)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
@@ -80,5 +77,16 @@ class ScenesService {
 
     fun listById(id: Long?): Scenes? {
         return scenesRepository.findById(id)
+    }
+
+    fun patch(scene: Scenes): Scenes{
+        val sceneToPatch = scenesRepository.findById(scene.id)?:
+        throw Exception("scene not found")
+        sceneToPatch.apply {
+            minutes = scene.minutes
+            budget = scene.budget
+            description = scene.description
+        }
+        return scenesRepository.save(sceneToPatch)
     }
 }

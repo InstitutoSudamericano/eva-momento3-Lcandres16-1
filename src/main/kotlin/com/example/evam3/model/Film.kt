@@ -1,6 +1,7 @@
 package com.example.evam3.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -18,13 +19,10 @@ class Film {
     var id: Long? = null
     var title: String? = null
     var director: String? = null
-    var duration: Float? = null
+    var minutes: Long? = null
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "film", cascade = [CascadeType.ALL], orphanRemoval = true)
     var scenes: List<Scenes>? = null
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "film", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var characters: List<Character>? = null
 }

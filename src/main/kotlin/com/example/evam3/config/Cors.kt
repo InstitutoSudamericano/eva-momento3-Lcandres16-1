@@ -13,7 +13,8 @@ class CorsConfig: WebMvcConfigurer{
             .allowedOrigins(
                 "http://localhost:8000",
                 "http://localhost:5173",
-                "http://localhost:8001")
+                "http://localhost:8001",
+                "exp://192.168.18.40:8081")
             .allowedMethods("POST", "GET", "post")
             .allowCredentials(true)
     }

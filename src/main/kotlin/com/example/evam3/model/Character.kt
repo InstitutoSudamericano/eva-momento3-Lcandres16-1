@@ -1,5 +1,6 @@
 package com.example.evam3.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -20,7 +21,8 @@ class Character {
     var role: String? = null
     var cost: Float? = null
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "film_id")
-    var film: Film? = null
+    @JoinColumn(name = "scene_id")
+    var scene: Scenes? = null
 }

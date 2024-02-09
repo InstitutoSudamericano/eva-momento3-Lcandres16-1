@@ -39,7 +39,7 @@ class FilmController {
 
     @PatchMapping
     fun updateTitle(@RequestBody film: Film): ResponseEntity<Film> {
-        return ResponseEntity(filmService.updateTitle(film), HttpStatus.OK)
+        return ResponseEntity(filmService.patch(film), HttpStatus.OK)
     }
 
     @DeleteMapping("/delete/{id}")

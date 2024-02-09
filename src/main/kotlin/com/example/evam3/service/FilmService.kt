@@ -1,6 +1,7 @@
 package com.example.evam3.service
 
 import com.example.evam3.model.Film
+import com.example.evam3.model.Scenes
 import com.example.evam3.repository.FilmRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -67,5 +68,16 @@ class FilmService {
 
     fun listById(id: Long?): Film? {
         return filmRepository.findById(id)
+    }
+
+    fun patch(film: Film): Film {
+        val filmToPatch = filmRepository.findById(film.id)?:
+        throw Exception("scene not found")
+        film.apply {
+            minutes = film.minutes
+            title = film.title
+            director = film.director
+        }
+        return filmRepository.save(filmToPatch)
     }
 }
