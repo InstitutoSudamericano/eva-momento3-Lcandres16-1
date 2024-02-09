@@ -37,4 +37,11 @@ class CharacterService {
         }
         return  characterRepository.save(characterToPatch)
     }
+
+    fun delete(id: Long?): Boolean{
+        val character = characterRepository.findById(id)?: throw Exception("character not found")
+        characterRepository.deleteById(id!!)
+        return true
+
+    }
 }
